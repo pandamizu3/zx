@@ -104,7 +104,11 @@ const PortfolioPage = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.5 }}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+              className={`grid gap-8 ${
+                activeCategory === 'design' 
+                  ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3' 
+                  : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4'
+              }`}
             >
               {/* 3D Product Visualizations */}
               {(activeCategory === 'all' || activeCategory === '3d') && productWorks.map((product, index) => (
@@ -115,7 +119,7 @@ const PortfolioPage = () => {
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   className="group relative bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all"
                 >
-                  <div className="relative aspect-square overflow-hidden">
+                  <div className="relative aspect-[3/4] overflow-hidden">
                     <img
                       src={product.image}
                       alt={product.title}
@@ -138,8 +142,8 @@ const PortfolioPage = () => {
                 </motion.div>
               ))}
 
-              {/* Design Works from Instagram */}
-              {(activeCategory === 'all' || activeCategory === 'design') && designWorks.map((work, index) => (
+              {/* Design Works */}
+              {(activeCategory === 'all' || activeCategory === 'design') && [...designWorks, ...additionalDesignWorks].map((work, index) => (
                 <motion.div
                   key={`design-${index}`}
                   initial={{ opacity: 0, y: 20 }}
@@ -147,7 +151,7 @@ const PortfolioPage = () => {
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   className="group relative bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all"
                 >
-                  <div className="relative aspect-square overflow-hidden">
+                  <div className="relative aspect-[3/4] overflow-hidden">
                     <img
                       src={work.image}
                       alt={work.title}
@@ -172,7 +176,7 @@ const PortfolioPage = () => {
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all"
                 >
-                  <div className="relative aspect-[9/16] bg-gray-900">
+                  <div className="relative aspect-[3/4] bg-gray-900">
                     <iframe
                       src={video.embedUrl}
                       title={video.title}
@@ -203,7 +207,7 @@ const PortfolioPage = () => {
   );
 };
 
-// 3D product visualization works
+// Keep the existing productWorks array...
 const productWorks = [
   {
     title: "Dish Soap Bottle",
@@ -315,7 +319,7 @@ const productWorks = [
   }
 ];
 
-// Design works data from Instagram
+// Keep the existing designWorks array...
 const designWorks = [
   {
     title: "Brand Identity Design",
@@ -379,7 +383,56 @@ const designWorks = [
   }
 ];
 
-// Video works data
+// Add 9 new design works
+const additionalDesignWorks = [
+  {
+    title: "Fashion Lookbook",
+    description: "Seasonal collection showcase with editorial styling",
+    image: "https://images.pexels.com/photos/994523/pexels-photo-994523.jpeg"
+  },
+  {
+    title: "Restaurant Menu",
+    description: "Elegant menu design with food photography",
+    image: "https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg"
+  },
+  {
+    title: "Travel Brochure",
+    description: "Destination marketing with stunning visuals",
+    image: "https://images.pexels.com/photos/2325446/pexels-photo-2325446.jpeg"
+  },
+  {
+    title: "Beauty Product Packaging",
+    description: "Luxurious skincare product packaging design",
+    image: "https://images.pexels.com/photos/4041392/pexels-photo-4041392.jpeg"
+  },
+  {
+    title: "Festival Branding",
+    description: "Complete visual identity for arts festival",
+    image: "https://images.pexels.com/photos/1190297/pexels-photo-1190297.jpeg"
+  },
+  {
+    title: "Book Cover Series",
+    description: "Contemporary book cover designs for fiction series",
+    image: "https://images.pexels.com/photos/694740/pexels-photo-694740.jpeg"
+  },
+  {
+    title: "Wellness App Design",
+    description: "Mobile app design for meditation and mindfulness",
+    image: "https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg"
+  },
+  {
+    title: "Eco-Friendly Packaging",
+    description: "Sustainable packaging design for organic products",
+    image: "https://images.pexels.com/photos/4040644/pexels-photo-4040644.jpeg"
+  },
+  {
+    title: "Annual Report Design",
+    description: "Corporate annual report with infographics",
+    image: "https://images.pexels.com/photos/669615/pexels-photo-669615.jpeg"
+  }
+];
+
+// Keep the existing videoWorks array...
 const videoWorks = [
   {
     title: "Product Launch Teaser",
