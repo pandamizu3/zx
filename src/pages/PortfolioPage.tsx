@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Instagram, Youtube, Box, ExternalLink, Image, Camera } from 'lucide-react';
+import { Instagram, Youtube, Box, ExternalLink, Image, Camera, X } from 'lucide-react';
 
 const PortfolioPage = () => {
   const [activeCategory, setActiveCategory] = useState('all');
+  const [selectedImage, setSelectedImage] = useState<{url: string, title: string} | null>(null);
 
   const categories = [
     { id: 'all', name: 'All Work', icon: <Box className="w-4 h-4" /> },
@@ -26,6 +27,16 @@ const PortfolioPage = () => {
       description: 'Professional stock photos and vectors'
     }
   ];
+
+  const handleImageClick = (url: string, title: string) => {
+    setSelectedImage({ url, title });
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeLightbox = () => {
+    setSelectedImage(null);
+    document.body.style.overflow = 'unset';
+  };
 
   return (
     <div className="min-h-screen pt-16">
@@ -117,7 +128,8 @@ const PortfolioPage = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="group relative bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all"
+                  className="group relative bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all cursor-pointer"
+                  onClick={() => handleImageClick(product.image, product.title)}
                 >
                   <div className="relative aspect-[3/4] overflow-hidden">
                     <img
@@ -149,7 +161,8 @@ const PortfolioPage = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="group relative bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all"
+                  className="group relative bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all cursor-pointer"
+                  onClick={() => handleImageClick(work.image, work.title)}
                 >
                   <div className="relative aspect-[3/4] overflow-hidden">
                     <img
@@ -203,11 +216,45 @@ const PortfolioPage = () => {
           </AnimatePresence>
         </div>
       </section>
+
+      {/* Lightbox */}
+      <AnimatePresence>
+        {selectedImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4"
+            onClick={closeLightbox}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="relative max-w-7xl mx-auto"
+              onClick={e => e.stopPropagation()}
+            >
+              <button
+                onClick={closeLightbox}
+                className="absolute -top-12 right-0 text-white hover:text-gray-300 transition-colors"
+                aria-label="Close lightbox"
+              >
+                <X className="w-8 h-8" />
+              </button>
+              <img
+                src={selectedImage.url}
+                alt={selectedImage.title}
+                className="max-h-[85vh] w-auto mx-auto"
+              />
+              <p className="text-white text-center mt-4 text-lg font-medium">{selectedImage.title}</p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
 
-// Keep the existing productWorks array...
 const productWorks = [
   {
     title: "Dish Soap Bottle",
@@ -319,7 +366,6 @@ const productWorks = [
   }
 ];
 
-// Keep the existing designWorks array...
 const designWorks = [
   {
     title: "Brand Identity Design",
@@ -383,7 +429,6 @@ const designWorks = [
   }
 ];
 
-// Add 9 new design works
 const additionalDesignWorks = [
   {
     title: "Fashion Lookbook",
@@ -432,7 +477,6 @@ const additionalDesignWorks = [
   }
 ];
 
-// Keep the existing videoWorks array...
 const videoWorks = [
   {
     title: "Product Launch Teaser",
