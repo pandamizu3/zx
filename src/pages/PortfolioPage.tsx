@@ -155,7 +155,23 @@ const PortfolioPage = () => {
               ))}
 
               {/* Design Works */}
-              {(activeCategory === 'all' || activeCategory === 'design') && [...designWorks, ...additionalDesignWorks].map((work, index) => (
+              {(activeCategory === 'all' || activeCategory === 'design') && [...designWorks, ...additionalDesignWorks, 
+                {
+                  title: "Mobile App UI Kit",
+                  description: "Modern mobile application interface design system",
+                  image: "https://images.pexels.com/photos/1447254/pexels-photo-1447254.jpeg"
+                },
+                {
+                  title: "Digital Marketing Campaign",
+                  description: "Comprehensive social media marketing assets",
+                  image: "https://images.pexels.com/photos/3182812/pexels-photo-3182812.jpeg"
+                },
+                {
+                  title: "Product Launch Materials",
+                  description: "Complete branding package for new product launch",
+                  image: "https://images.pexels.com/photos/1036848/pexels-photo-1036848.jpeg"
+                }
+              ].map((work, index) => (
                 <motion.div
                   key={`design-${index}`}
                   initial={{ opacity: 0, y: 20 }}
