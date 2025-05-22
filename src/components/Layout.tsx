@@ -52,6 +52,11 @@ const Layout = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4 md:py-6">
             <Link to="/" className="flex items-center space-x-2">
+              <img 
+                src="https://i.imgur.com/dKHsWNQ.png" 
+                alt="Pandu Logo" 
+                className="w-8 h-8 rounded-full"
+              />
               <span className="font-bold text-xl bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text text-transparent">
                 PANDU
               </span>
